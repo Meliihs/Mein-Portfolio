@@ -3,225 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Portfolio</title>
+    <title>Portfolio</title>
     <style>
-        /* Allgemeine Stile */
+        /* Apple-inspired Design System */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Typische Apple-Schriftarten-Fallback-Kette */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
-            line-height: 1.6;
+            background-color: #f5f5f7; /* Apple's typisches Hellgrau */
+            color: #1d1d1f; /* Fast Schwarz für perfekten Kontrast */
+            line-height: 1.5;
         }
 
         .container {
-            width: 80%;
-            max-width: 1100px;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
-        }
-
-        /* Navigation */
-        header {
-            background: #2c3e50;
-            color: #ffffff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #1abc9c 3px solid;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        header a {
-            color: #ffffff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
-        }
-
-        header ul {
-            padding: 0;
-            list-style: none;
-            float: right;
-            margin-top: -5px;
-        }
-
-        header li {
-            display: inline;
-            padding: 0 20px 0 20px;
-        }
-
-        header #branding {
-            float: left;
-        }
-
-        header #branding h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        /* Hero Sektion */
-        #showcase {
-            min-height: 400px;
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            text-align: center;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        #showcase h1 {
-            font-size: 45px;
-            margin-bottom: 10px;
-        }
-
-        #showcase p {
-            font-size: 20px;
-            color: #1abc9c;
-        }
-
-        /* Sektionen Allgemein */
-        section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 32px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: #1abc9c;
-            margin: 10px auto 0 auto;
-        }
-
-        /* Über mich */
-        #about p {
-            font-size: 18px;
-            text-align: center;
-            max-width: 800px;
+            width: 90%;
+            max-width: 1050px;
             margin: 0 auto;
         }
 
-        /* Projekte Grid */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        /* Navigationsleiste (Transluzent wie bei Apple) */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        .project-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 48px; /* Typische Apple-Navigationshöhe */
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 22px;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
-        .project-card h3 {
-            margin-bottom: 10px;
-            color: #2c3e50;
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
         }
 
-        .project-card p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .project-card a {
-            color: #1abc9c;
+        nav a {
+            color: #515154;
             text-decoration: none;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 400;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
         }
 
-        /* Kontakt */
-        #contact {
-            background: #2c3e50;
-            color: #fff;
+        nav a:hover {
+            opacity: 1;
+            color: #000;
+        }
+
+        /* Hero Sektion */
+        .hero {
+            padding: 120px 0 80px 0;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            line-height: 1.07;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            font-weight: 400;
+            color: #86868b;
+            letter-spacing: .009em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Sektionen */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 50px;
             text-align: center;
         }
 
-        #contact .section-title {
-            color: #fff;
+        /* Über mich */
+        .about-text {
+            font-size: 21px;
+            line-height: 1.38;
+            font-weight: 600;
+            color: #86868b;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        .contact-btn {
-            display: inline-block;
-            background: #1abc9c;
-            color: #fff;
-            padding: 12px 30px;
+        .about-text span {
+            color: #1d1d1f; /* Highlights im Text */
+        }
+
+        /* Projekte Baukasten (Grid) */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border-radius: 18px; /* Sanfte, typische Apple-Rundung */
+            padding: 40px;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .project-info h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .project-info p {
+            font-size: 17px;
+            color: #86868b;
+            font-weight: 400;
+        }
+
+        .project-link {
+            color: #0066cc; /* Apple Link-Blau */
             text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            margin-top: 20px;
-            transition: background 0.3s ease;
+            font-size: 17px;
+            font-weight: 400;
         }
 
-        .contact-btn:hover {
-            background: #16a085;
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Kontakt (Call to Action) */
+        .contact-section {
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #0071e3; /* Apple Button-Blau */
+            color: #ffffff;
+            padding: 12px 22px;
+            font-size: 17px;
+            font-weight: 400;
+            border-radius: 980px; /* Komplett runde Ecken für Buttons */
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: #0077ed;
         }
 
         /* Footer */
         footer {
-            padding: 20px;
-            background: #1a252f;
-            color: #ffffff;
-            text-align: center;
-            font-size: 14px;
+            background: #f5f5f7;
+            padding: 40px 0;
+            font-size: 12px;
+            color: #86868b;
+            border-top: 1px solid #d2d2d7;
         }
 
-        /* Responsive Design */
-        @media(max-width: 768px) {
-            header #branding,
-            header ul,
-            header li {
-                float: none;
-                display: block;
-                text-align: center;
-            }
-            header ul {
-                margin-top: 10px;
-            }
-            header li {
-                padding: 5px;
-            }
-            .container {
-                width: 95%;
-            }
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive Anpassungen */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .hero p { font-size: 20px; }
+            .section-title { font-size: 32px; }
+            .project-grid { grid-template-columns: 1fr; }
+            .project-card { min-height: 350px; padding: 30px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Apple-style Nav -->
     <header>
-        <div class="container">
-            <div id="branding">
-                <h1>Max Mustermann</h1>
-            </div>
+        <div class="nav-container">
+            <div class="logo">Portfolio.</div>
             <nav>
                 <ul>
-                    <li><a href="#showcase">Home</a></li>
                     <li><a href="#about">Über mich</a></li>
                     <li><a href="#projects">Projekte</a></li>
                     <li><a href="#contact">Kontakt</a></li>
@@ -230,59 +235,66 @@
         </div>
     </header>
 
-    <section id="showcase">
+    <!-- Hero Sektion -->
+    <section class="hero">
         <div class="container">
-            <h1>Hallo, ich bin Webentwickler.</h1>
-            <p>Ich baue moderne, schnelle und benutzerfreundliche Websites.</p>
+            <h1>Großartig. Durchdacht.</h1>
+            <p>Ich entwickle digitale Erlebnisse mit Fokus auf das Wesentliche.</p>
         </div>
     </section>
 
+    <!-- Über mich (Bento/Minimalist Text) -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">Über mich</h2>
-            <p>
-                Hier kannst du eine kurze Beschreibung über dich selbst einfügen. Was machst du? Was sind deine Leidenschaften? Welche Technologien (z.B. HTML, CSS, JavaScript) beherrschst du? Halte es kurz, knackig und interessant für zukünftige Kunden oder Arbeitgeber.
+            <p class="about-text">
+                Ich bin leidenschaftlicher Entwickler. <span>Ich glaube daran, dass Design unsichtbar sein sollte</span> – es sollte einfach funktionieren. Mit modernen Webtechnologien baue ich Interfaces, die nicht nur schön aussehen, sondern sich auch intuitiv anfühlen.
             </p>
         </div>
     </section>
 
-    <section id="projects" style="background-color: #eaeded;">
+    <!-- Projekte (Zwei-Spalten-Layout wie Produktkacheln) -->
+    <section id="projects">
         <div class="container">
-            <h2 class="section-title">Meine Projekte</h2>
+            <h2 class="section-title">Ausgewählte Projekte.</h2>
             <div class="project-grid">
                 
+                <!-- Produktkachel 1 -->
                 <div class="project-card">
-                    <h3>Projekt Name 1</h3>
-                    <p>Eine kurze Beschreibung, worum es in diesem Projekt ging. Welche Probleme hast du gelöst und welche Tech-Stacks wurden verwendet?</p>
-                    <a href="#" target="_blank">Projekt ansehen &rarr;</a>
+                    <div class="project-info">
+                        <h3>E-Commerce App</h3>
+                        <p>Schnell. Sicher. Grenzenlos.</p>
+                    </div>
+                    <a href="#" class="project-link">Mehr erfahren &gt;</a>
                 </div>
 
+                <!-- Produktkachel 2 -->
                 <div class="project-card">
-                    <h3>Projekt Name 2</h3>
-                    <p>Eine kurze Beschreibung, worum es in diesem Projekt ging. Welche Probleme hast du gelöst und welche Tech-Stacks wurden verwendet?</p>
-                    <a href="#" target="_blank">Projekt ansehen &rarr;</a>
-                </div>
-
-                <div class="project-card">
-                    <h3>Projekt Name 3</h3>
-                    <p>Eine kurze Beschreibung, worum es in diesem Projekt ging. Welche Probleme hast du gelöst und welche Tech-Stacks wurden verwendet?</p>
-                    <a href="#" target="_blank">Projekt ansehen &rarr;</a>
+                    <div class="project-info">
+                        <h3>Minimalist UI</h3>
+                        <p>Weniger Komplexität, mehr Fokus.</p>
+                    </div>
+                    <a href="#" class="project-link">Mehr erfahren &gt;</a>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <section id="contact">
+    <!-- Kontakt -->
+    <section id="contact" class="contact-section">
         <div class="container">
-            <h2 class="section-title">Lass uns zusammenarbeiten!</h2>
-            <p>Du hast ein Projekt im Kopf oder möchtest mich einfach kennenlernen?</p>
-            <a href="mailto:deine.e-mail@beispiel.de" class="contact-btn">Schreib mir eine Mail</a>
+            <h2 class="section-title">Bereit für das Nächste?</h2>
+            <p style="font-size: 21px; color: #86868b; margin-bottom: 30px;">Lass uns gemeinsam etwas Großartiges erschaffen.</p>
+            <a href="mailto:deine.e-mail@apple-style.de" class="cta-button">Verbindung aufnehmen</a>
         </div>
     </section>
 
+    <!-- Footer im typischen Apple-Kleingedruckten-Look -->
     <footer>
-        <p>Max Mustermann &copy; 2026 | Erstellt mit Herz und Code.</p>
+        <div class="container">
+            <p>Copyright © 2026 Dein Name. Alle Rechte vorbehalten.</p>
+            <p>Datenschutzrichtlinie | Verwendung von Cookies | Nutzungsbedingungen</p>
+        </div>
     </footer>
 
 </body>
