@@ -1,570 +1,90 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melih Simir | Portfolio</title>
-    <style>
-        /* --- DESIGN SYSTEM & VARS (Apple Pro Dark UI) --- */
-        :root {
-            --bg-color: #000000;
-            --panel-bg: #161617;
-            --panel-hover: #1c1c1e;
-            --text-main: #f5f5f7;
-            --text-secondary: #86868b;
-            --accent-blue: #2997ff;
-            --accent-green: #30d158;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+from fastapi import FastAPI, APIRouter
+from dotenv import load_dotenv
+from starlette.middleware.cors import CORSMiddleware
+from motor.motor_asyncio import AsyncIOMotorClient
+import os
+import logging
+from pathlib import Path
+from pydantic import BaseModel, Field, ConfigDict
+from typing import List
+import uuid
+from datetime import datetime, timezone
+
+
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# MongoDB connection
+mongo_url = os.environ['MONGO_URL']
+client = AsyncIOMotorClient(mongo_url)
+db = client[os.environ['DB_NAME']]
+
+# Create the main app without a prefix
+app = FastAPI()
+
+# Create a router with the /api prefix
+api_router = APIRouter(prefix="/api")
+
+
+# Define Models
+class StatusCheck(BaseModel):
+    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    client_name: str
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class StatusCheckCreate(BaseModel):
+    client_name: str
+
+# Add your routes to the router instead of directly to app
+@api_router.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@api_router.post("/status", response_model=StatusCheck)
+async def create_status_check(input: StatusCheckCreate):
+    status_dict = input.model_dump()
+    status_obj = StatusCheck(**status_dict)
+    
+    # Convert to dict and serialize datetime to ISO string for MongoDB
+    doc = status_obj.model_dump()
+    doc['timestamp'] = doc['timestamp'].isoformat()
+    
+    _ = await db.status_checks.insert_one(doc)
+    return status_obj
+
+@api_router.get("/status", response_model=List[StatusCheck])
+async def get_status_checks():
+    # Exclude MongoDB's _id field from the query results
+    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
+    
+    # Convert ISO string timestamps back to datetime objects
+    for check in status_checks:
+        if isinstance(check['timestamp'], str):
+            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
+    
+    return status_checks
+
+# Include the router in the main app
+app.include_router(api_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+@app.on_event("shutdown")
+async def shutdown_db_client():
+    client.close()
 
-        /* --- SMOOTH SCROLL EFFECT --- */
-        html {
-            scroll-behavior: smooth;
-            background-color: #000000;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-stack);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            background-color: #000000;
-            color: var(--text-main);
-            line-height: 1.5;
-            font-weight: 400;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* --- NAVIGATION --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 48px;
-            background: rgba(22, 22, 23, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 9999;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: 0 22px;
-        }
-
-        .logo {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .logo-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-green);
-            border-radius: 50%;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 32px;
-        }
-
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 12px;
-            transition: color 0.25s ease;
-        }
-
-        nav a:hover {
-            color: var(--text-main);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            padding: 160px 0 100px 0;
-            text-align: center;
-            background: radial-gradient(circle at 50% 30%, #1c1c1e 0%, #000000 70%);
-        }
-
-        /* Styling für dein Profilbild */
-        .profile-image {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(48, 209, 88, 0.1);
-            border: 1px solid rgba(48, 209, 88, 0.2);
-            color: var(--accent-green);
-            padding: 6px 16px;
-            border-radius: 980px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-size: 64px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 24px;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 40px auto;
-        }
-
-        .cta-group {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            font-size: 15px;
-            border-radius: 980px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: var(--accent-blue);
-            color: #ffffff;
-        }
-
-        .btn-primary:hover {
-            background: #43a4ff;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* --- SEKTIONEN --- */
-        section {
-            padding: 100px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section-header {
-            max-width: 600px;
-            margin-bottom: 60px;
-        }
-
-        .section-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .section-title {
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        /* --- SKILLS --- */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-
-        .skill-group h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            color: var(--text-main);
-        }
-
-        .skill-item {
-            margin-bottom: 20px;
-        }
-
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .progress-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-blue), #5ac8fa);
-            border-radius: 3px;
-            width: 0;
-            animation: fillUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes fillUp {
-            to { width: var(--target-width); }
-        }
-
-        /* --- PROJEKT KACHELN --- */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-        }
-
-        .project-card {
-            background: var(--panel-bg);
-            border-radius: 22px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            background: var(--panel-hover);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .img-1 { background: linear-gradient(135deg, #0d47a1 0%, #00e5ff 100%); }
-        .img-2 { background: linear-gradient(135deg, #311b92 0%, #ea80fc 100%); }
-
-        .mock-ui {
-            width: 80%;
-            height: 70%;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mock-nav { display: flex; gap: 6px; }
-        .mock-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; }
-        .mock-line { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; }
-        .mock-box { flex: 1; background: rgba(255,255,255,0.05); border-radius: 6px; }
-
-        .project-content {
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .tag {
-            font-size: 11px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 4px 10px;
-            border-radius: 4px;
-            color: var(--text-secondary);
-        }
-
-        .project-card h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .project-card p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .project-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 15px;
-            margin-top: auto;
-        }
-
-        /* --- EXPERIENCE TIMELINE --- */
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            max-width: 800px;
-        }
-
-        .timeline-item {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .time-meta h4 { font-size: 18px; }
-        .time-meta p { color: var(--accent-blue); font-size: 14px; }
-        .time-period {
-            font-size: 13px;
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.05);
-            padding: 4px 12px;
-            border-radius: 980px;
-        }
-
-        /* --- CONTACT --- */
-        .contact-panel {
-            background: linear-gradient(180deg, var(--panel-bg) 0%, #000000 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 60px;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-panel h2 { font-size: 42px; margin-bottom: 16px; }
-        .contact-panel p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; }
-
-        /* --- FOOTER --- */
-        footer {
-            padding: 40px 0;
-            background: #000;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
-        .footer-container { display: flex; justify-content: space-between; }
-
-        /* --- RESPONSIVENESS --- */
-        @media (max-width: 900px) {
-            .skills-container, .project-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 40px; }
-            .hero p { font-size: 18px; }
-            .timeline-item { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .footer-container { flex-direction: column; gap: 16px; text-align: center; }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo"><div class="logo-dot"></div> it.student</a>
-            <nav>
-                <ul>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projekte</a></li>
-                    <li><a href="#experience">Ausbildung</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <div class="badge">
-                <span style="display:inline-block; width:6px; height:6px; background:#30d158; border-radius:50%;"></span>
-                Suche Stelle als Werkstudent / Praktikant
-            </div>
-            
-            <div>
-                <img src="https://i.ibb.co/68HMRVb4/Melih-Bild.jpg" alt="Melih Simir" class="profile-image">
-            </div>
-
-            <h1>Melih Simir</h1>
-            <p>Informatik-Student & Tech Enthusiast</p>
-            <div class="cta-group">
-                <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
-                <a href="#projects" class="btn btn-secondary">Projekte ansehen</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Fokus</span>
-                <h2 class="section-title">Technische Interessen</h2>
-            </div>
-            
-            <div class="skills-container">
-                <div class="skill-group">
-                    <h3>Backend & Cloud</h3>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>Node.js / TypeScript</span><span>80%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 80%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>Java / Grundlagen</span><span>75%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 75%;"></div></div>
-                    </div>
-                </div>
-
-                <div class="skill-group">
-                    <h3>Frontend Engineering</h3>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>React / Next.js</span><span>85%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 85%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info"><span>HTML / CSS UI Design</span><span>90%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 90%;"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Praxis</span>
-                <h2 class="section-title">Ausgewählte Projekte</h2>
-            </div>
-
-            <div class="project-grid">
-                <div class="project-card">
-                    <div class="project-image img-1">
-                        <div class="mock-ui">
-                            <div class="mock-nav"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
-                            <div class="mock-line" style="width: 40%"></div>
-                            <div class="mock-box"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags"><span class="tag">Next.js</span><span class="tag">REST API</span></div>
-                        <h3>Web-App Dashboard</h3>
-                        <p>Entwicklung eines responsiven Dashboards im Rahmen einer Eigeninitiative zur Datenvisualisierung.</p>
-                        <a href="#" class="project-link">Code auf GitHub &rarr;</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image img-2">
-                        <div class="mock-ui">
-                            <div class="mock-nav"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
-                            <div class="mock-line" style="width: 60%"></div>
-                            <div class="mock-box"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags"><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
-                        <h3>University Project API</h3>
-                        <p>Konzeption und Umsetzung einer RESTful API für ein universitäres Gruppenprojekt.</p>
-                        <a href="#" class="project-link">Projekt-Details &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="experience">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Bildungsweg</span>
-                <h2 class="section-title">Ausbildung & Stationen</h2>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="time-meta"><h4>Bachelor of Science: Informatik</h4><p>Deine Universität / Hochschule</p></div>
-                    <span class="time-period">2024 - Heute</span>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-meta"><h4>Abitur / Allgemeine Hochschulreife</h4><p>Deine Schule</p></div>
-                    <span class="time-period">Bis 2024</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <div class="contact-panel">
-                <h2>Lass uns gemeinsam an Projekten arbeiten.</h2>
-                <p>Ich bin aktuell auf der Suche nach spannenden Werkstudentenstellen oder Praktika.</p>
-                <a href="mailto:melih.simir@beispiel.de" class="btn btn-primary">Nachricht schreiben</a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container footer-container">
-            <p>&copy; 2026 Melih Simir. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
