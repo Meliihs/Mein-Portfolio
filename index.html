@@ -1,74 +1,130 @@
 <!DOCTYPE html>
-   <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mein Portfolio</title>
 
-      <!--=============== FAVICON ===============-->
-      <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
 
-      <!--=============== REMIXICONS ===============-->
-      <link href="https://cdn.jsdelivr.net/npm/remixicon@3.0.0/fonts/remixicon.css" rel="stylesheet">
+    header {
+      background: white;
+      padding: 50px 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
 
-      <!--=============== CSS ===============-->
-      <link rel="stylesheet" href="assets/css/styles.css">
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
 
-      <title>Responsive portfolio website - Bedimcode</title>
-   </head>
-   <body>
-      <!--==================== HEADER ====================-->
-      <header class="header" id="header">
-         
-      </header>
+    header p {
+      color: #666;
+      margin-top: 10px;
+    }
 
-      <!--==================== MAIN ====================-->
-      <main class="main">
-         <!--==================== HOME ====================-->
-         <section class="home section" id="home">
-            
-         </section>
+    section {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+    }
 
-         <!--==================== ABOUT ====================-->
-         <section class="about section" id="about">
-            
-         </section>
+    h2 {
+      border-left: 4px solid #4da3ff;
+      padding-left: 10px;
+      margin-bottom: 20px;
+    }
 
-         <!--==================== SKILLS ====================-->
-         <section class="skills section">
-            
-         </section>
+    .card {
+      background: white;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: 0.2s;
+    }
 
-         <!--==================== SERVICES ====================-->
-         <section class="services section" id="services">
-            
-         </section>
+    .card:hover {
+      transform: translateY(-3px);
+    }
 
-         <!--==================== PROJECTS ====================-->
-         <section class="projects section" id="projects">
-            
-         </section>
+    a {
+      color: #4da3ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-         <!--==================== CONTACT ====================-->
-         <section class="contact section" id="contact">
-            
-         </section>
-      </main>
+    .contact {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
 
-      <!--==================== FOOTER ====================-->
-      <footer class="footer">
-         
-      </footer>
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #888;
+    }
+  </style>
+</head>
 
-      <!--========== SCROLL UP ==========-->
-      
+<body>
 
-      <!--=============== SCROLLREVEAL ===============-->
-      <script src=""></script>
+<header>
+  <h1>👋 Hi, ich bin IT Student</h1>
+  <p>Backend Developer • Unity Game Dev • Python</p>
+</header>
 
-      <!--=============== EMAIL JS ===============-->
-      
+<section>
+  <h2>Über mich</h2>
+  <p>
+    Ich bin Informatik Student und entwickle Projekte mit Python, Java und Unity.
+    Ich interessiere mich für Softwareentwicklung, Games und Backend Systeme.
+  </p>
+</section>
 
-      <!--=============== MAIN JS ===============-->
-      <script src="assets/js/main.js"></script>
-   </body>
+<section>
+  <h2>Projekte</h2>
+
+  <div class="card">
+    <h3>💬 Chat App</h3>
+    <p>Echtzeit Chat mit WebSockets</p>
+    <a href="#">GitHub ansehen</a>
+  </div>
+
+  <div class="card">
+    <h3>🎮 Unity Platformer</h3>
+    <p>2D Game mit Gegner AI und Checkpoints</p>
+    <a href="#">GitHub ansehen</a>
+  </div>
+
+  <div class="card">
+    <h3>🔐 Password Manager</h3>
+    <p>AES verschlüsselte Passwort Verwaltung</p>
+    <a href="#">GitHub ansehen</a>
+  </div>
+</section>
+
+<section>
+  <h2>Kontakt</h2>
+
+  <div class="contact">
+    <p>📧 Email: deinemail@gmail.com</p>
+    <p>💻 GitHub: github.com/deinname</p>
+  </div>
+</section>
+
+<footer>
+  © 2026 Mein Portfolio
+</footer>
+
+</body>
 </html>
