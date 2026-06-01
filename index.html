@@ -113,6 +113,17 @@
             background: radial-gradient(circle at 50% 30%, #1c1c1e 0%, #000000 70%);
         }
 
+        /* NEU: Styling für dein Profilbild */
+        .profile-image {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
         .badge {
             display: inline-flex;
             align-items: center;
@@ -207,7 +218,7 @@
             font-weight: 700;
         }
 
-        /* --- SKILLS (Sichere Animation) --- */
+        /* --- SKILLS --- */
         .skills-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -243,7 +254,7 @@
             height: 100%;
             background: linear-gradient(90deg, var(--accent-blue), #5ac8fa);
             border-radius: 3px;
-            width: 0; /* Startwert für Animation */
+            width: 0;
             animation: fillUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
@@ -285,8 +296,6 @@
 
         .img-1 { background: linear-gradient(135deg, #0d47a1 0%, #00e5ff 100%); }
         .img-2 { background: linear-gradient(135deg, #311b92 0%, #ea80fc 100%); }
-        .img-3 { background: linear-gradient(135deg, #1b5e20 0%, #b9f6ca 100%); }
-        .img-4 { background: linear-gradient(135deg, #e65100 0%, #ffd180 100%); }
 
         .mock-ui {
             width: 80%;
@@ -415,12 +424,12 @@
     <!-- Header Navigation -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo"><div class="logo-dot"></div> Melih.dev</a>
+            <a href="#" class="logo"><div class="logo-dot"></div> it.student</a>
             <nav>
                 <ul>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#projects">Projekte</a></li>
-                    <li><a href="#experience">Erfahrung</a></li>
+                    <li><a href="#experience">Ausbildung</a></li>
                     <li><a href="#contact">Kontakt</a></li>
                 </ul>
             </nav>
@@ -432,13 +441,19 @@
         <div class="container">
             <div class="badge">
                 <span style="display:inline-block; width:6px; height:6px; background:#30d158; border-radius:50%;"></span>
-                Verfügbar für neue Projekte / Festanstellung
+                Suche Stelle als Werkstudent / Praktikant
             </div>
+            
+            <!-- HIER WURDE DAS PROFILBILD HINZUGEFÜGT -->
+            <div>
+                <img src="DEIN_BILD.jpg" alt="Melih Simir" class="profile-image">
+            </div>
+
             <h1>Melih Simir</h1>
             <p>Informatik-Student & Tech Enthusiast</p>
             <div class="cta-group">
-                <a href="#contact" class="btn btn-primary">Projekt anfragen</a>
-                <a href="#projects" class="btn btn-secondary">Case Studies</a>
+                <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
+                <a href="#projects" class="btn btn-secondary">Projekte ansehen</a>
             </div>
         </div>
     </section>
@@ -447,32 +462,32 @@
     <section id="skills">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Expertise</span>
-                <h2 class="section-title">Technische Kompetenz</h2>
+                <span class="section-label">Fokus</span>
+                <h2 class="section-title">Technische Interessen</h2>
             </div>
             
             <div class="skills-container">
                 <div class="skill-group">
-                    <h3>Backend & Architecture</h3>
+                    <h3>Backend & Cloud</h3>
                     <div class="skill-item">
-                        <div class="skill-info"><span>Node.js / TypeScript</span><span>95%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 95%;"></div></div>
+                        <div class="skill-info"><span>Node.js / TypeScript</span><span>80%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 80%;"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-info"><span>AWS & Cloud Kubernetes</span><span>90%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 90%;"></div></div>
+                        <div class="skill-info"><span>Java / Grundlagen</span><span>75%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 75%;"></div></div>
                     </div>
                 </div>
 
                 <div class="skill-group">
                     <h3>Frontend Engineering</h3>
                     <div class="skill-item">
-                        <div class="skill-info"><span>React / Next.js</span><span>92%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 92%;"></div></div>
+                        <div class="skill-info"><span>React / Next.js</span><span>85%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 85%;"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-info"><span>Performance Optimization</span><span>95%</span></div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 95%;"></div></div>
+                        <div class="skill-info"><span>HTML / CSS UI Design</span><span>90%</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="--target-width: 90%;"></div></div>
                     </div>
                 </div>
             </div>
@@ -483,7 +498,7 @@
     <section id="projects">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Case Studies</span>
+                <span class="section-label">Praxis</span>
                 <h2 class="section-title">Ausgewählte Projekte</h2>
             </div>
 
@@ -498,10 +513,10 @@
                         </div>
                     </div>
                     <div class="project-content">
-                        <div class="project-tags"><span class="tag">Next.js</span><span class="tag">GraphQL</span></div>
-                        <h3>FinTech Dashboard Platform</h3>
-                        <p>Architektur und Implementierung einer echtzeitfähigen Plattform mit optimierten Ladezeiten.</p>
-                        <a href="#" class="project-link">Architektur-Review lesen &rarr;</a>
+                        <div class="project-tags"><span class="tag">Next.js</span><span class="tag">REST API</span></div>
+                        <h3>Web-App Dashboard</h3>
+                        <p>Entwicklung eines responsiven Dashboards im Rahmen einer Eigeninitiative zur Datenvisualisierung.</p>
+                        <a href="#" class="project-link">Code auf GitHub &rarr;</a>
                     </div>
                 </div>
 
@@ -515,32 +530,32 @@
                         </div>
                     </div>
                     <div class="project-content">
-                        <div class="project-tags"><span class="tag">Kubernetes</span><span class="tag">Go</span></div>
-                        <h3>Cloud-Native Service Mesh</h3>
-                        <p>Skalierung einer verteilten Infrastruktur zur Verarbeitung von über 50.000 req/s.</p>
-                        <a href="#" class="project-link">Infrastruktur-Details &rarr;</a>
+                        <div class="project-tags"><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
+                        <h3>University Project API</h3>
+                        <p>Konzeption und Umsetzung einer RESTful API für ein universitäres Gruppenprojekt.</p>
+                        <a href="#" class="project-link">Projekt-Details &rarr;</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Section -->
+    <!-- Experience/Education Section -->
     <section id="experience">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Track Record</span>
-                <h2 class="section-title">Berufliche Stationen</h2>
+                <span class="section-label">Bildungsweg</span>
+                <h2 class="section-title">Ausbildung & Stationen</h2>
             </div>
 
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="time-meta"><h4>Lead Full-Stack Engineer</h4><p>Global Tech Solutions GmbH</p></div>
-                    <span class="time-period">2023 - Heute</span>
+                    <div class="time-meta"><h4>Bachelor of Science: Informatik</h4><p>Deine Universität / Hochschule</p></div>
+                    <span class="time-period">2024 - Heute</span>
                 </div>
                 <div class="timeline-item">
-                    <div class="time-meta"><h4>Senior Software Architect</h4><p>Digital Core Innovators</p></div>
-                    <span class="time-period">2020 - 2023</span>
+                    <div class="time-meta"><h4>Abitur / Allgemeine Hochschulreife</h4><p>Deine Schule</p></div>
+                    <span class="time-period">Bis 2024</span>
                 </div>
             </div>
         </div>
@@ -550,9 +565,9 @@
     <section id="contact">
         <div class="container">
             <div class="contact-panel">
-                <h2>Lass uns dein nächstes System skalieren.</h2>
-                <p>Egal ob Freelance-Projekt oder Senior-Rolle — ich freue mich auf den Austausch.</p>
-                <a href="mailto:deinename@senior-dev.de" class="btn btn-primary">Direkte Mail senden</a>
+                <h2>Lass uns gemeinsam an Projekten arbeiten.</h2>
+                <p>Ich bin aktuell auf der Suche nach spannenden Werkstudentenstellen oder Praktika.</p>
+                <a href="mailto:melih.simir@beispiel.de" class="btn btn-primary">Nachricht schreiben</a>
             </div>
         </div>
     </section>
