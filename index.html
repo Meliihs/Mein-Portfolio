@@ -1,604 +1,273 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melih Simir | Portfolio</title>
-    <style>
-        /* --- DESIGN SYSTEM & VARS (Apple Pro Dark UI) --- */
-        :root {
-            --bg-color: #000000;
-            --panel-bg: #161617;
-            --panel-hover: #1c1c1e;
-            --text-main: #f5f5f7;
-            --text-secondary: #86868b;
-            --accent-blue: #2997ff;
-            --accent-green: #30d158;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melih Simir | Portfolio</title>
 
-        /* --- SMOOTH SCROLL EFFECT --- */
-        html {
-            scroll-behavior: smooth;
-            background-color: #000000;
-        }
+<style>
+:root {
+    --bg-color: #000;
+    --panel-bg: #161617;
+    --panel-hover: #1c1c1e;
+    --text-main: #f5f5f7;
+    --text-secondary: #86868b;
+    --accent-blue: #2997ff;
+    --accent-green: #30d158;
+    --border-color: rgba(255,255,255,0.1);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-stack);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+html { scroll-behavior: smooth; }
+body {
+    margin:0;
+    background:#000;
+    color:var(--text-main);
+    font-family:var(--font);
+}
 
-        body {
-            background-color: #000000;
-            color: var(--text-main);
-            line-height: 1.5;
-            font-weight: 400;
-            overflow-x: hidden;
-        }
+/* NAV */
+header {
+    position:fixed;
+    top:0;
+    width:100%;
+    height:50px;
+    background:rgba(22,22,23,0.8);
+    backdrop-filter:blur(20px);
+    display:flex;
+    align-items:center;
+    z-index:999;
+}
+.nav-container {
+    width:100%;
+    max-width:1000px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    padding:0 20px;
+}
+nav a {
+    color:var(--text-secondary);
+    margin-left:20px;
+    text-decoration:none;
+}
+nav a:hover { color:#fff; }
 
-        .container {
-            width: 100%;
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+/* HERO */
+.hero {
+    padding:140px 20px 80px;
+    text-align:center;
+    background:radial-gradient(circle at top,#1c1c1e,black);
+}
+.hero-image img {
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid rgba(255,255,255,0.15);
+    margin-bottom:20px;
+}
+.badge {
+    display:inline-block;
+    padding:6px 14px;
+    background:rgba(48,209,88,0.1);
+    border:1px solid rgba(48,209,88,0.2);
+    border-radius:999px;
+    color:var(--accent-green);
+    font-size:13px;
+    margin-bottom:20px;
+}
+h1 { font-size:52px; margin:10px 0; }
+.hero p { color:var(--text-secondary); font-size:20px; }
 
-        /* --- NAVIGATION --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 48px;
-            background: rgba(22, 22, 23, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 9999;
-        }
+.btn {
+    display:inline-block;
+    padding:10px 20px;
+    border-radius:999px;
+    margin:10px;
+    text-decoration:none;
+}
+.btn-primary { background:var(--accent-blue); color:#fff; }
+.btn-secondary {
+    background:rgba(255,255,255,0.1);
+    color:#fff;
+}
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            max-width: 1024px;
-            margin: 0 auto;
-            padding: 0 22px;
-        }
+/* SECTIONS */
+section { padding:80px 20px; border-top:1px solid var(--border-color); }
+.container { max-width:1000px; margin:auto; }
 
-        .logo {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+/* SKILLS */
+.skills {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+}
+.skill {
+    margin-bottom:15px;
+}
+.bar {
+    height:6px;
+    background:#333;
+    border-radius:4px;
+}
+.fill {
+    height:6px;
+    background:linear-gradient(90deg,var(--accent-blue),#5ac8fa);
+}
 
-        .logo-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-green);
-            border-radius: 50%;
-        }
+/* PROJECTS */
+.projects {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+.card {
+    background:var(--panel-bg);
+    padding:20px;
+    border-radius:16px;
+    border:1px solid var(--border-color);
+}
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 32px;
-        }
+/* CONTACT */
+.contact {
+    text-align:center;
+    background:linear-gradient(#161617,black);
+    padding:60px 20px;
+    border-radius:20px;
+}
 
-        nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 12px;
-            transition: color 0.25s ease;
-        }
-
-        nav a:hover {
-            color: var(--text-main);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            padding: 160px 0 100px 0;
-            text-align: center;
-            background: radial-gradient(circle at 50% 30%, #1c1c1e 0%, #000000 70%);
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(48, 209, 88, 0.1);
-            border: 1px solid rgba(48, 209, 88, 0.2);
-            color: var(--accent-green);
-            padding: 6px 16px;
-            border-radius: 980px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-size: 64px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.1;
-            margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 24px;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 40px auto;
-        }
-
-        .cta-group {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            font-size: 15px;
-            border-radius: 980px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: var(--accent-blue);
-            color: #ffffff;
-        }
-
-        .btn-primary:hover {
-            background: #43a4ff;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* --- SEKTIONEN --- */
-        section {
-            padding: 100px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section-header {
-            max-width: 600px;
-            margin-bottom: 60px;
-        }
-
-        .section-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .section-title {
-            font-size: 36px;
-            font-weight: 700;
-        }
-
-        /* --- SKILLS (Sichere Animation) --- */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-
-        .skill-group h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            color: var(--text-main);
-        }
-
-        .skill-item {
-            margin-bottom: 20px;
-        }
-
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        .progress-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-blue), #5ac8fa);
-            border-radius: 3px;
-            width: 0; /* Startwert für Animation */
-            animation: fillUp 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes fillUp {
-            to { width: var(--target-width); }
-        }
-
-        /* --- PROJEKT KACHELN --- */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
-        }
-
-        .project-card {
-            background: var(--panel-bg);
-            border-radius: 22px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            background: var(--panel-hover);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .img-1 { background: linear-gradient(135deg, #0d47a1 0%, #00e5ff 100%); }
-        .img-2 { background: linear-gradient(135deg, #311b92 0%, #ea80fc 100%); }
-        .img-3 { background: linear-gradient(135deg, #1b5e20 0%, #b9f6ca 100%); }
-        .img-4 { background: linear-gradient(135deg, #e65100 0%, #ffd180 100%); }
-
-        .mock-ui {
-            width: 80%;
-            height: 70%;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mock-nav { display: flex; gap: 6px; }
-        .mock-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; }
-        .mock-line { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; }
-        .mock-box { flex: 1; background: rgba(255,255,255,0.05); border-radius: 6px; }
-
-        .project-content {
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .tag {
-            font-size: 11px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 4px 10px;
-            border-radius: 4px;
-            color: var(--text-secondary);
-        }
-
-        .project-card h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .project-card p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .project-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 15px;
-            margin-top: auto;
-        }
-
-        /* --- EXPERIENCE TIMELINE --- */
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            max-width: 800px;
-        }
-
-        .timeline-item {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .time-meta h4 { font-size: 18px; }
-        .time-meta p { color: var(--accent-blue); font-size: 14px; }
-        .time-period {
-            font-size: 13px;
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.05);
-            padding: 4px 12px;
-            border-radius: 980px;
-        }
-
-        /* --- CONTACT --- */
-        .contact-panel {
-            background: linear-gradient(180deg, var(--panel-bg) 0%, #000000 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 60px;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-panel h2 { font-size: 42px; margin-bottom: 16px; }
-        .contact-panel p { color: var(--text-secondary); font-size: 18px; margin-bottom: 32px; }
-
-        /* --- FOOTER --- */
-        footer {
-            padding: 40px 0;
-            background: #000;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
-        .footer-container { display: flex; justify-content: space-between; }
-
-        /* --- RESPONSIVENESS --- */
-        @media (max-width: 900px) {
-            .skills-container, .project-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 40px; }
-            .hero p { font-size: 18px; }
-            .timeline-item { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .footer-container { flex-direction: column; gap: 16px; text-align: center; }
-        }
-    </style>
+/* MOBILE */
+@media(max-width:768px){
+    .skills,.projects { grid-template-columns:1fr; }
+    h1 { font-size:38px; }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Header Navigation -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo"><div class="logo-dot"></div> Melih.dev</a>
-            <nav>
-                <ul>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projekte</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header>
+<div class="nav-container">
+    <div>Melih.dev</div>
+    <nav>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projekte</a>
+        <a href="#contact">Kontakt</a>
+    </nav>
+</div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="badge">
-                <span style="display:inline-block; width:6px; height:6px; background:#30d158; border-radius:50%;"></span>
-                Ein Überblick über meine technischen Fähigkeiten und bisherigen Projekte
-            </div>
-            <h1>Melih Simir</h1>
-            <p>Informatik-Student</p>
-            <div class="cta-group">
-                <a href="#contact" class="btn btn-primary">Projekt anfragen</a>
-                <a href="#projects" class="btn btn-secondary">Case Studies</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
+<!-- HERO -->
+<section class="hero">
     <div class="container">
-        <div class="section-header">
-            <span class="section-label">Expertise</span>
-            <h2 class="section-title">Technische Kompetenz</h2>
+
+        <div class="hero-image">
+            <img src="dein-bild.jpg" alt="Profilbild">
         </div>
 
-        <div class="skills-container">
-
-            <!-- Programmiersprachen -->
-            <div class="skill-group">
-                <h3>Programmiersprachen</h3>
-
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>Java</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 85%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>Python</span>
-                        <span>80%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 80%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>C#</span>
-                        <span>75%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 75%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>C++</span>
-                        <span>70%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 70%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Datenbanken -->
-            <div class="skill-group">
-                <h3>Datenbanken & Technologien</h3>
-
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>SQL</span>
-                        <span>90%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 90%;"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>HTML / CSS</span>
-                        <span>80%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 80%;"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span>Git & GitHub</span>
-                        <span>75%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="--target-width: 75%;"></div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="badge">
+            Portfolio meiner Projekte & technischen Fähigkeiten
         </div>
+
+        <h1>Melih Simir</h1>
+        <p>Informatik-Student | Software & Game Development</p>
+
+        <div>
+            <a class="btn btn-primary" href="#contact">Kontakt</a>
+            <a class="btn btn-secondary" href="#projects">Projekte</a>
+        </div>
+
     </div>
 </section>
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Case Studies</span>
-                <h2 class="section-title">Ausgewählte Projekte</h2>
-            </div>
 
-            <div class="project-grid">
-                <!-- Projekt 1 -->
-                <div class="project-card">
-                    <div class="project-image img-1">
-                        <div class="mock-ui">
-                            <div class="mock-nav"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
-                            <div class="mock-line" style="width: 40%"></div>
-                            <div class="mock-box"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags"><span class="tag">Next.js</span><span class="tag">GraphQL</span></div>
-                        <h3>FinTech Dashboard Platform</h3>
-                        <p>Architektur und Implementierung einer echtzeitfähigen Plattform mit optimierten Ladezeiten.</p>
-                        <a href="#" class="project-link">Architektur-Review lesen &rarr;</a>
-                    </div>
-                </div>
+<!-- SKILLS -->
+<section id="skills">
+<div class="container">
+<h2>Technische Skills</h2>
 
-                <!-- Projekt 2 -->
-                <div class="project-card">
-                    <div class="project-image img-2">
-                        <div class="mock-ui">
-                            <div class="mock-nav"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
-                            <div class="mock-line" style="width: 60%"></div>
-                            <div class="mock-box"></div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags"><span class="tag">Kubernetes</span><span class="tag">Go</span></div>
-                        <h3>Cloud-Native Service Mesh</h3>
-                        <p>Skalierung einer verteilten Infrastruktur zur Verarbeitung von über 50.000 req/s.</p>
-                        <a href="#" class="project-link">Infrastruktur-Details &rarr;</a>
-                    </div>
-                </div>
-            </div>
+<div class="skills">
+
+    <div>
+        <h3>Programmiersprachen</h3>
+
+        <div class="skill">Java
+            <div class="bar"><div class="fill" style="width:85%"></div></div>
         </div>
-    </section>
 
-    
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="contact-panel">
-                <h2>Lass uns dein nächstes System skalieren.</h2>
-                <p>Egal ob Freelance-Projekt oder Senior-Rolle — ich freue mich auf den Austausch.</p>
-                <a href="mailto:deinename@senior-dev.de" class="btn btn-primary">Direkte Mail senden</a>
-            </div>
+        <div class="skill">Python
+            <div class="bar"><div class="fill" style="width:80%"></div></div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-container">
-            <p>&copy; 2026 Melih Simir. Alle Rechte vorbehalten.</p>
+        <div class="skill">C#
+            <div class="bar"><div class="fill" style="width:75%"></div></div>
         </div>
-    </footer>
+
+        <div class="skill">C++
+            <div class="bar"><div class="fill" style="width:70%"></div></div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Datenbanken & Tools</h3>
+
+        <div class="skill">SQL
+            <div class="bar"><div class="fill" style="width:90%"></div></div>
+        </div>
+
+        <div class="skill">HTML / CSS
+            <div class="bar"><div class="fill" style="width:80%"></div></div>
+        </div>
+
+        <div class="skill">Git
+            <div class="bar"><div class="fill" style="width:75%"></div></div>
+        </div>
+
+    </div>
+
+</div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<div class="container">
+<h2>Projekte</h2>
+
+<div class="projects">
+
+<div class="card">
+<h3>Flask Chatroom</h3>
+<p>Echtzeit Chat mit Flask & WebSockets</p>
+</div>
+
+<div class="card">
+<h3>Remote File Manager</h3>
+<p>Verteiltes System mit Python & RPyC</p>
+</div>
+
+<div class="card">
+<h3>AES Kryptographie</h3>
+<p>Verschlüsselung & HMAC Analyse</p>
+</div>
+
+<div class="card">
+<h3>Unity Game</h3>
+<p>2D Pixelart Game mit C#</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="container contact">
+<h2>Kontakt</h2>
+<p>Ich freue mich über Praktika, Werkstudentenstellen und Projekte.</p>
+<a class="btn btn-primary" href="mailto:deinemail@mail.com">Email senden</a>
+</div>
+</section>
 
 </body>
 </html>
